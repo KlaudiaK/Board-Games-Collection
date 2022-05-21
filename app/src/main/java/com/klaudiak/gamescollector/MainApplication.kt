@@ -1,4 +1,4 @@
-package com.klaudiak.mybgc
+package com.klaudiak.gamescollector
 
 import android.app.Application
 import android.util.Log
@@ -12,7 +12,6 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.tag("INFO").i("START")
-        //if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 
 }

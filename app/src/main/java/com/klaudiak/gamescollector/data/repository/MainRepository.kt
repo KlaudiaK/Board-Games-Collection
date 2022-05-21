@@ -1,11 +1,11 @@
-package com.boardgamecollector.data.repository
+package com.klaudiak.gamescollector.data.repository
 
-import com.boardgamecollector.domain.Game
-import com.boardgamecollector.utils.DataState
-import com.boardgamecollector.utils.mappers.DatabaseMapper
-import com.boardgamecollector.utils.mappers.NetworkMapper
-import com.example.rickandmorty.data.local.GameDao
-import com.example.rickandmorty.data.remote.NetworkService
+import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.utils.DataState
+import com.klaudiak.gamescollector.utils.mappers.DatabaseMapper
+import com.klaudiak.gamescollector.utils.mappers.NetworkMapper
+import com.klaudiak.gamescollector.data.local.GameDao
+import com.klaudiak.gamescollector.data.remote.NetworkService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception

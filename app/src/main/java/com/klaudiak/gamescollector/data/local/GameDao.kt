@@ -1,7 +1,7 @@
-package com.example.rickandmorty.data.local
+package com.klaudiak.gamescollector.data.local
 
 import androidx.room.*
-import com.boardgamecollector.data.entities.GameEntity
+import com.klaudiak.gamescollector.data.entities.GameEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

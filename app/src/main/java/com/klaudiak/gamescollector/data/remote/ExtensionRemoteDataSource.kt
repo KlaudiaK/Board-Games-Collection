@@ -1,6 +1,5 @@
-package com.example.rickandmorty.data.remote
+package com.klaudiak.gamescollector.data.remote
 
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class AppRemoteDataSource @Inject constructor(

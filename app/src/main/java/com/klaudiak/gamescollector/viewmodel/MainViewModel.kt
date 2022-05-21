@@ -1,12 +1,10 @@
-package com.boardgamecollector.viewmodel
+package com.klaudiak.gamescollector.viewmodel
 
 
 import androidx.lifecycle.*
-import com.boardgamecollector.data.repository.MainRepository
-import com.boardgamecollector.domain.Game
-import com.boardgamecollector.utils.DataState
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import com.klaudiak.gamescollector.data.repository.MainRepository
+import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -1,9 +1,8 @@
-package com.example.rickandmorty.data.local
+package com.klaudiak.gamescollector.data.local
 
 import androidx.room.*
-import com.example.rickandmorty.data.entities.Info
+import com.klaudiak.gamescollector.data.entities.Info
 import kotlinx.coroutines.flow.Flow
-import java.util.*
 
 @Dao
 interface InfoDao {

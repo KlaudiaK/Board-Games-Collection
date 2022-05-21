@@ -1,9 +1,9 @@
-package com.boardgamecollector.utils.mappers
+package com.klaudiak.gamescollector.utils.mappers
 
-import com.boardgamecollector.data.remote.reponses.UserGamesResponse
-import com.boardgamecollector.domain.Game
-import com.boardgamecollector.domain.Id
-import com.example.rickandmorty.data.remote.reponses.GameResponse
+import com.klaudiak.gamescollector.data.remote.reponses.UserGamesResponse
+import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.domain.Id
+import com.klaudiak.gamescollector.data.remote.reponses.GameResponse
 import javax.inject.Inject
 
 class NetworkMapper @Inject constructor() : EntityMapper<GameResponse.Item, Game> {

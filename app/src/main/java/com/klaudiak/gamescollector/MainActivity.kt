@@ -1,52 +1,37 @@
 package com.klaudiak.gamescollector
 
+
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.boardgamecollector.di.NetworkModule
-import com.boardgamecollector.domain.Game
-import com.boardgamecollector.utils.DataState
-import com.boardgamecollector.viewmodel.MainViewModel
-import com.example.rickandmorty.data.remote.NetworkService
-import com.klaudiak.R
+import com.klaudiak.gamescollector.data.remote.NetworkService
+import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.utils.DataState
+import com.klaudiak.gamescollector.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import timber.log.Timber
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-private lateinit var text: TextView
-    private val TAG: String = "AppDebug"
 
 
 
-    //lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
+    @Inject
+    lateinit var networkService: NetworkService
 
-   // private val viewModel: MainViewModel by viewModels()
-     @Inject
-     lateinit var networkService: NetworkService
+    private lateinit var text: TextView
 
-
-   // private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Timber.tag("INFO").i("START")
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val viewModel: MainViewModel by viewModels()
         subscribeObservers(viewModel)
-        // viewModel.setStateEvent(MainStateEvent.GetGamesEvents)
-        //text = findViewById<TextView>(R.id.textField)
-        //networkService = NetworkModule.provideRetrofitService()
-
     }
 
     private fun subscribeObservers(viewModel: MainViewModel){

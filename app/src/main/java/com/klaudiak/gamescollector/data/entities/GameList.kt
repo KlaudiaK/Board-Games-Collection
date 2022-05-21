@@ -1,6 +1,6 @@
-package com.example.rickandmorty.data.entities
+package com.klaudiak.gamescollector.data.entities
 
-import com.boardgamecollector.domain.Game
+import com.klaudiak.gamescollector.domain.Game
 
 data class GameList(
     val list: List<Game>

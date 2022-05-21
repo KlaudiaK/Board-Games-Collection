@@ -1,4 +1,4 @@
-package com.boardgamecollector.domain
+package com.klaudiak.gamescollector.domain
 
 
 data class Game(

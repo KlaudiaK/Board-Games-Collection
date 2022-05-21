@@ -1,5 +1,5 @@
-package com.boardgamecollector.utils
-import com.boardgamecollector.utils.Result.Success
+package com.klaudiak.gamescollector.utils
+import com.klaudiak.gamescollector.utils.Result.Success
 /**
  * A generic class that holds a value with its loading status.
  * @param <T>

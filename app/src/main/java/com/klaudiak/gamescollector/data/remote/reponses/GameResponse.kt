@@ -1,4 +1,4 @@
-package com.example.rickandmorty.data.remote.reponses
+package com.klaudiak.gamescollector.data.remote.reponses
 
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element

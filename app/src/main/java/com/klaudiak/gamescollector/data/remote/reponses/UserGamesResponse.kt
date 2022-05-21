@@ -1,4 +1,4 @@
-package com.boardgamecollector.data.remote.reponses
+package com.klaudiak.gamescollector.data.remote.reponses
 
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.ElementList
@@ -17,7 +17,7 @@ data class UserGamesResponse (
 
         @param:Attribute(name = "objectid")
         @get:Attribute(name = "objectid")
-        val id: String? = null,
+        val id: String? = null
 
         )
 }

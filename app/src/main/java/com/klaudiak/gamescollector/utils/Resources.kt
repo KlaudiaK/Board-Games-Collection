@@ -1,4 +1,4 @@
-package com.boardgamecollector.utils
+package com.klaudiak.gamescollector.utils
 
 import java.lang.Exception
 
@@ -17,6 +17,6 @@ sealed class Resources<T>(
 sealed class DataState<out T>(
 ) {
     data class Success<out T>(val data: T) : DataState<T>()
-    object Loading: DataState<Nothing> ()
+    object Loading: DataState<Nothing>()
     data class Error<T>(val exception: Exception) : DataState<Nothing>()
 }

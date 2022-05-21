@@ -1,17 +1,16 @@
-package com.boardgamecollector.di
+package com.klaudiak.gamescollector.di
 
 import android.content.Context
-import com.boardgamecollector.data.repository.MainRepository
-import com.boardgamecollector.domain.Game
-import com.boardgamecollector.utils.mappers.DatabaseMapper
-import com.boardgamecollector.utils.mappers.EntityMapper
-import com.boardgamecollector.utils.mappers.NetworkMapper
-import com.example.rickandmorty.data.local.AppDatabase
-import com.example.rickandmorty.data.local.GameDao
-import com.example.rickandmorty.data.remote.NetworkService
-import com.example.rickandmorty.data.remote.reponses.GameResponse
+import com.klaudiak.gamescollector.data.repository.MainRepository
+import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.utils.mappers.DatabaseMapper
+import com.klaudiak.gamescollector.utils.mappers.EntityMapper
+import com.klaudiak.gamescollector.utils.mappers.NetworkMapper
+import com.klaudiak.gamescollector.data.local.AppDatabase
+import com.klaudiak.gamescollector.data.local.GameDao
+import com.klaudiak.gamescollector.data.remote.NetworkService
+import com.klaudiak.gamescollector.data.remote.reponses.GameResponse
 import com.github.slashrootv200.retrofithtmlconverter.HtmlConverterFactory
-import com.klaudiak.mybgc.MainApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,7 +58,7 @@ object RepositoryModule {
         networkService: NetworkService,
         databaseMapper: DatabaseMapper,
         networkMapper: NetworkMapper
-    ) : MainRepository{
+    ) : MainRepository {
         return MainRepository(gameDao, networkService, databaseMapper, networkMapper)
     }
 }

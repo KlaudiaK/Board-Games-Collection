@@ -1,4 +1,4 @@
-package com.boardgamecollector.data.entities
+package com.klaudiak.gamescollector.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

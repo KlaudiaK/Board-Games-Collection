@@ -1,4 +1,4 @@
-package com.boardgamecollector.utils.mappers
+package com.klaudiak.gamescollector.utils.mappers
 
 interface EntityMapper<Entity, DomainModel> {
     fun mapFromEntity(entity: Entity): DomainModel

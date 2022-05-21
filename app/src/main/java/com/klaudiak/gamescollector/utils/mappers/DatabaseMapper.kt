@@ -1,7 +1,7 @@
-package com.boardgamecollector.utils.mappers
+package com.klaudiak.gamescollector.utils.mappers
 
-import com.boardgamecollector.data.entities.GameEntity
-import com.boardgamecollector.domain.Game
+import com.klaudiak.gamescollector.data.entities.GameEntity
+import com.klaudiak.gamescollector.domain.Game
 import javax.inject.Inject
 
 class DatabaseMapper @Inject constructor() : EntityMapper<GameEntity, Game> {
