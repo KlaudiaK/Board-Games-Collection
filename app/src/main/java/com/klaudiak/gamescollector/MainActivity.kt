@@ -1,7 +1,10 @@
 package com.klaudiak.gamescollector
 
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,20 +20,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-
-
     private val viewModel: MainViewModel by viewModels()
+
     @Inject
     lateinit var networkService: NetworkService
 
     private lateinit var text: TextView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         subscribeObservers(viewModel)
     }
 
