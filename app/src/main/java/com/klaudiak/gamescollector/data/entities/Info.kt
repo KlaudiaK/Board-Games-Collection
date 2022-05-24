@@ -8,5 +8,5 @@ import org.jetbrains.annotations.NotNull
 @Entity(tableName = "info")
 data class Info(
     @PrimaryKey @NotNull val username: String,
-    @ColumnInfo(name = "last_sync") val lastSyncDate: String
+    @ColumnInfo(name = "last_sync") val lastSyncDate: String?
 )

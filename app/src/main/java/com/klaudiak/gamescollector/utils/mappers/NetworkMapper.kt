@@ -1,44 +1,59 @@
 package com.klaudiak.gamescollector.utils.mappers
 
+import com.klaudiak.gamescollector.data.remote.reponses.GameItemResponse
 import com.klaudiak.gamescollector.data.remote.reponses.UserGamesResponse
 import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.domain.Id
 import com.klaudiak.gamescollector.data.remote.reponses.GameResponse
+import com.klaudiak.gamescollector.data.remote.reponses.UserExistResponse
+import com.klaudiak.gamescollector.domain.Username
 import javax.inject.Inject
 
-class NetworkMapper @Inject constructor() : EntityMapper<GameResponse.Item, Game> {
-    override fun mapFromEntity(entity: GameResponse.Item): Game {
+class NetworkMapper @Inject constructor() : EntityMapper<GameItemResponse, Game> {
+    override fun mapFromEntity(entity: GameItemResponse): Game {
         return Game(
             id = entity.id!!,
             name = entity.title,
             image = entity.image,
-            description = entity.description,
-            released = entity.year,
-            rating = entity.rank?.rankPos ?: 0
+            released = entity.year?.year,
+            rating = entity.statistics?.stats?.pos
         )
     }
 
-    override fun mapToEntity(domainModel: Game): GameResponse.Item {
-        return GameResponse.Item(
+    override fun mapToEntity(domainModel: Game): GameItemResponse {
+        return GameItemResponse(
             id = null,
             title = null,
             image = null,
-            description = null,
-            rank = null
+
         )
     }
 
-    private fun mapFromIdEntity(entity: UserGamesResponse.Item): Id {
+    private fun mapFromIdEntity(entity: GameItemResponse): Id {
         return Id(
             id = entity.id
         )
     }
 
-    fun mapFromEntityList(entities: List<GameResponse.Item>): List<Game>{
-        return entities.map { mapFromEntity(it) }
+    fun mapFromEntityList(entities: ArrayList<GameItemResponse>?): ArrayList<Game>{
+        return entities?.map { mapFromEntity(it) } as ArrayList<Game>
     }
 
-    fun mapFromEntityIdList(entities: List<UserGamesResponse.Item>): List<Id>{
+    fun mapFromEntityIdList(entities: List<GameItemResponse>): List<Id>{
         return entities.map { mapFromIdEntity(it) }
+    }
+
+
+
+}
+
+class UserMapper @Inject constructor() : EntityMapper<UserExistResponse, Username> {
+
+    override fun mapFromEntity(entity: UserExistResponse): Username {
+        return Username(user = entity.firstname)
+    }
+
+    override fun mapToEntity(domainModel: Username): UserExistResponse {
+        return UserExistResponse(firstname = null)
     }
 }
