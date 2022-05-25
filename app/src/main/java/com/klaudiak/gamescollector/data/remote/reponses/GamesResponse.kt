@@ -15,9 +15,9 @@ data class GamesResponse (
 
 @Root(name = "item", strict = false)
 data class GameItemResponse(
-    @field:Attribute(name = "id", required = false)
-    @param:Attribute(name = "id", required = false)
-    var id: String? = null,
+    @field:Attribute(name = "objectid", required = false)
+    @param:Attribute(name = "objectid", required = false)
+    var id: String,
     @field:Element(name = "name", required = false)
     @param:Element(name = "name", required = false)
     var title: String? = null,

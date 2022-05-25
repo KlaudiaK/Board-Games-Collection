@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DatabaseMapper @Inject constructor() : EntityMapper<GameEntity, Game>{
     override fun mapFromEntity(entity: GameEntity): Game {
         return Game(
-            id = entity.id!!,
+            id = entity.id,
             name = entity.name,
             image = entity.image,
             released = entity.released,
@@ -19,6 +19,7 @@ class DatabaseMapper @Inject constructor() : EntityMapper<GameEntity, Game>{
 
     override fun mapToEntity(domainModel: Game): GameEntity {
         return GameEntity(
+            gameid = null,
             id = domainModel.id,
             name = domainModel.name,
             image = domainModel.image,
@@ -31,8 +32,8 @@ class DatabaseMapper @Inject constructor() : EntityMapper<GameEntity, Game>{
         return entities.map{mapFromEntity(it)}
     }
 
-    fun mapToListEntities(domainModel: List<Game>) : List<GameEntity>{
-        return domainModel.map{mapToEntity(it)}
+    fun mapToListEntities(domainModel: List<Game>?) : List<GameEntity>{
+        return domainModel?.map{mapToEntity(it)} ?: ArrayList()
     }
 }
 

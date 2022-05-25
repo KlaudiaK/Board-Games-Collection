@@ -1,7 +1,5 @@
 package com.klaudiak.gamescollector
 
-import com.klaudiak.gamescollector.data.remote.reponses.UserExistResponse
-import com.klaudiak.gamescollector.data.remote.reponses.UserExistResponses
 
 import org.junit.Test
 

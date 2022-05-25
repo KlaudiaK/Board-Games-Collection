@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.klaudiak.gamescollector.data.local.AppDatabase
 import com.klaudiak.gamescollector.data.remote.NetworkService
 import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.presentation.GameListScreen
@@ -41,8 +42,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+       // deleteDatabase("")
+        AppDatabase.getDatabase(this)
         //setContentView(R.layout.activity_main)
-        subscribeObservers(viewModel)
+        //subscribeObservers(viewModel)
        // viewModel.setUserFromApi(MainStateEvent.GetUsernameEvent)
       //  viewModel.setStateEvent(MainStateEvent.GetGamesEvents)
         //viewModel.setUsernameEvent(MainStateEvent.GetGamesEvents)
@@ -141,7 +144,7 @@ class MainActivity : AppCompatActivity() {
     private fun appendBlogTitles(games: List<Game>){
         val sb = StringBuilder()
         for(game in games){
-            sb.append(game.id + "\n")
+            sb.append(game.id.toString() + "\n")
         }
         text.text = sb.toString()
     }

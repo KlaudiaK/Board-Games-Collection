@@ -1,6 +1,7 @@
 package com.klaudiak.gamescollector.data.repository
 
 import android.util.Log
+import com.klaudiak.gamescollector.data.entities.GameEntity
 import com.klaudiak.gamescollector.data.entities.Info
 import com.klaudiak.gamescollector.data.local.GameDao
 import com.klaudiak.gamescollector.data.local.InfoDao
@@ -14,6 +15,8 @@ import com.klaudiak.gamescollector.utils.mappers.NetworkMapper
 import com.klaudiak.gamescollector.utils.mappers.UserMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -32,22 +35,27 @@ class MainRepository @Inject constructor(
         emit(DataState.Loading)
 
 
-        try{
+        try {
 
-            val gamesItems: ArrayList<GameItemResponse>? = networkService.GamesList("rahdo", "1","boardgameexpansion" ).item
-
-           // Log.i("Info",gamesItems?.get(0)?.name.toString())
-           // var networkGamesIdList = networkService.getUserGames(username, stats, type)
-
-           // networkGamesIdList = networkService.getUserGames(username, stats, type)
-            val Games = networkMapper.mapFromEntityList(gamesItems)
+            val gamesItems: ArrayList<GameItemResponse>? =
+                networkService.GamesList("batman", "1", "boardgame").item
 
 
-            gameDao.insertAll(databaseMapper.mapToListEntities(Games))
+            val games = networkMapper.mapFromEntityList(gamesItems)
+            val gamesDB =  databaseMapper.mapToListEntities(games)
+           // for (i in gamesDB) Log.i("Info", i.toString())
+            val gamesEntities = databaseMapper.mapToListEntities(games)
+            //gameDao.deleteAllGames()
+            //gameDao.insertAll(databaseMapper.mapToListEntities(games))
 
+            //Log.i("Info", gameDao.getGameById("186435").name.toString())
+            Log.i("Info", gameDao.countAll().toString())
             val cachedGames = gameDao.getAllGameItems()
-            emit(DataState.Success(databaseMapper.mapFromListEntities(cachedGames)))
+            gameDao.getAllGameItems().map { game -> databaseMapper.mapFromListEntities(game) }
+            Log.i("info", "Success")
 
+           // for (i in databaseMapper.mapFromListEntities(cachedGames)) Log.i("Info", i.id)
+            emit(DataState.Success(databaseMapper.mapFromListEntities(cachedGames)))
 
 
         }catch (e:Exception){

@@ -1,4 +1,5 @@
 package com.klaudiak.gamescollector.presentation
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -7,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.viewmodel.MainViewModel
 
 import kotlinx.coroutines.launch
@@ -28,14 +29,12 @@ fun GameListScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-
-
-
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(state.gamesList.size) { i ->
                     val game = state.gamesList[i]
+                    Log.i("Game", game?.name.toString())
                     GameLisItem(
                         game = game,
                         modifier = Modifier
@@ -43,7 +42,11 @@ fun GameListScreen(
                             .clickable {
                                 //viewModel.onEvent(PokemonListScreenEvent.OnPokemonClick)
                                 coroutineScope.launch {
-                                    Toast.makeText(context,"Clicked Pokemon //todo add pokemon details screen", Toast.LENGTH_LONG)
+                                    Toast.makeText(
+                                        context,
+                                        "Clicked Pokemon //todo add pokemon details screen",
+                                        Toast.LENGTH_LONG
+                                    )
                                 }
                             }
                             .padding(16.dp)
@@ -58,3 +61,11 @@ fun GameListScreen(
 
     }
 }
+
+@Preview
+@Composable
+fun Preview(){
+    GameLisItem(game = Game("1", "Bla", "1009", "", ""))
+}
+
+

@@ -3,12 +3,12 @@ package com.klaudiak.gamescollector.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 
 @Entity(tableName = "games")
 data class GameEntity(
-    @PrimaryKey(autoGenerate = false) @NotNull val id: String,
+    @PrimaryKey(autoGenerate = true) val gameid: Long?,
+    @ColumnInfo val id: String,
     @ColumnInfo(name = "game_title") val name: String?,
     // @ColumnInfo(name = "original_game_title") val originalName: String?,
   //  @ColumnInfo(name = "description") val description: String?,

@@ -11,7 +11,8 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.tag("INFO").i("START")
+       // Timber.tag("INFO").i("START")
+        Timber.plant(Timber.DebugTree())
     }
 
 }

@@ -7,15 +7,20 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Sand60,
+    secondary = Sand100,
+    error = Red80,
+    onPrimary = NavyBlue80,
+    onSecondary = NavyBlue80
+
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Sand60,
+    secondary = Sand100,
+    error = Red80,
+    onPrimary = NavyBlue80,
+    onSecondary = NavyBlue80
 
     /* Other default colors to override
     background = Color.White,
@@ -26,7 +31,6 @@ private val LightColorPalette = lightColors(
     onSurface = Color.Black,
     */
 )
-
 @Composable
 fun GamesCollectorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

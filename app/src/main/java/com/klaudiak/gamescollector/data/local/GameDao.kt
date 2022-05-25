@@ -1,5 +1,6 @@
 package com.klaudiak.gamescollector.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.klaudiak.gamescollector.data.entities.GameEntity
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ interface GameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(games: List<GameEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insert(games: GameEntity)
 
 
@@ -21,10 +22,10 @@ interface GameDao {
     suspend fun deleteAllGames()
 
     @Query("SELECT * FROM games")
-    fun getAllGameItems(): List<GameEntity>
+    fun getAllGameItems(): Flow<List<GameEntity>>
 
     @Query("SELECT COUNT(*) FROM games")
-    fun countAll(): Flow<Int>
+    fun countAll(): LiveData<Int>
 
     @Query("SELECT * FROM games WHERE id = :id")
     fun getGameById(id: String): GameEntity
