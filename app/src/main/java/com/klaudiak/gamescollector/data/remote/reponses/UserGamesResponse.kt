@@ -20,7 +20,6 @@ data class UserGamesResponse (
     val id: String? = null,
 
 
-
     @field:Attribute(name = "termsofuse", required = false)
     @param:Attribute(name = "termsofuse", required = false)
     val termsOfUse: String? = null,
@@ -40,40 +39,8 @@ data class UserGamesResponse (
         )
 }
 
-@Root(name = "item", strict = false)
-data class Article  @JvmOverloads constructor(
-    /**
-     * @return the title
-     */
-    /**
-     * @param title the title to set
-     */
-    @field:Element(name = "title")
-    @param:Element(name = "title")
-    var title: String? = null,
-
-    /**
-     * @return the link
-     */
-    /**
-     * @param link the link to set
-     */
-    @field:Element(name = "link")
-    @param:Element(name = "link")
-    var link: String? = null,
-
-    /**
-     * @return the description
-     */
-    /**
-     * @param description the description to set
-     */
-    @field:Element(name = "description")
-    @param:Element(name = "description")
-    var description: String? = null
-)
 @Root(name = "items", strict = false)
-data class Feed (
+data class UserFeed (
     @field:ElementList(name = "item", inline = true)
     @param:ElementList(name = "item", inline = true)
     var item: ArrayList<ElementItem>? = null
@@ -82,12 +49,6 @@ data class Feed (
 @Root(name = "item", strict = false)
 data class ElementItem(
 
-    /**
-     * @return the channelTitle
-     */
-    /**
-     * @param channelTitle the channelTitle to set
-     */
     @field:Attribute(name = "type", required = false)
     @param:Attribute(name = "type",required = false)
     var type: String ="",
@@ -157,6 +118,7 @@ data class YearPublished(
     val year: String? = null
 
 )
+
 @Root(name = "statistics", strict = false)
 data class Statistics(
 
@@ -181,8 +143,3 @@ data class Ranks(
 )
 
 
-
-class ThingResponse {
-    @ElementList(name = "items", inline = true, required = false)
-    var games: List<Game>? = null
-}

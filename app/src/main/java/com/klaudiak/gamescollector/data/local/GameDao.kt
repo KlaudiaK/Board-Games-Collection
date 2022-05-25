@@ -22,10 +22,10 @@ interface GameDao {
     suspend fun deleteAllGames()
 
     @Query("SELECT * FROM games")
-    fun getAllGameItems(): Flow<List<GameEntity>>
+    fun getAllGameItems(): List<GameEntity>
 
     @Query("SELECT COUNT(*) FROM games")
-    fun countAll(): LiveData<Int>
+    fun countAll(): Flow<Int>
 
     @Query("SELECT * FROM games WHERE id = :id")
     fun getGameById(id: String): GameEntity

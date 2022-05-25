@@ -26,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "bgc_db"
             )
+                .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build()
     }

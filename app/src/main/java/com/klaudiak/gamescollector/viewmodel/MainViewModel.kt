@@ -34,20 +34,6 @@ class MainViewModel @Inject constructor(
         getGames("rahdo", "1", "boardgame")
     }
 
-    private val _dataState: MutableLiveData<DataState<List<Game>>> = MutableLiveData()
-    val dataState: LiveData<DataState<List<Game>>>
-    get () = _dataState
-
-
-    private val _dataUsernameState: MutableLiveData<DataState<String>> = MutableLiveData()
-    val dataUsernameState: LiveData<DataState<String>>
-        get () = _dataUsernameState
-
-
-    private val _dataUsernameApiState: MutableLiveData<DataState<String?>> = MutableLiveData()
-    val dataUsernameApiState: LiveData<DataState<String?>>
-        get () = _dataUsernameApiState
-
 
     fun onEvent(event: GamesListScreenEvent) {
         when(event) {
@@ -57,6 +43,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getGames(username: String, stats: String, type: String){
+
         viewModelScope.launch {
             mainRepository.getGames(username, stats, type)
                 .collect { result ->
@@ -77,54 +64,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-/*
-    fun setUsernameEvent(mainStateEvent: MainStateEvent){
-        viewModelScope.launch {
-            when(mainStateEvent){
-                is MainStateEvent.GetGamesEvents -> {
-                    mainRepository.getUserFirstTime("rahdo")
-                        .onEach { dataUsernameState ->
-                            _dataUsernameState.value = dataUsernameState
-                        }
-                        .launchIn(viewModelScope)
-                }
-                else -> {}
-            }
-        }
-    }
 
- */
-
-    fun setUserFromApi(username:String){/*
-        viewModelScope.launch {
-            mainRepository.getUserFirstTime("batman")
-                .collect { result->
-                    when(result) {
-                        is DataState.Error<*> -> Unit
-                        is DataState.Loading -> {Log.i("Game", "Loading")}//{state = state.copy(isRefrefreshing = DataState)}
-                        is DataState.Success -> {
-                            result.data.let { username ->
-                                state = state.copy(gamesList = games, isRefreshing = false)
-                                Log.i("Game", games.size.toString())
-                            }
-                        }
-                    }
-
-
-            when(mainStateEvent){
-                is MainStateEvent.GetUsernameEvent -> {
-                    mainRepository.getUsername()
-                        .onEach { dataUsernameApiState ->
-                            _dataUsernameApiState.value = dataUsernameApiState
-                        }
-                        .launchIn(viewModelScope)
-                }
-                else -> {}
-            }
-
-                     */
-
-    }
 }
 
 sealed class MainStateEvent{
@@ -139,7 +79,6 @@ data class GamesListScreenState(
 )
 
 sealed class GamesListScreenEvent {
-    class OnTextFieldValueChange(val value: String): GamesListScreenEvent()
     object OnGameClick: GamesListScreenEvent()
 
 }

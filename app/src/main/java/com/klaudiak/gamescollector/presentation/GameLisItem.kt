@@ -1,25 +1,31 @@
 package com.klaudiak.gamescollector.presentation
 
-import androidx.compose.runtime.Composable
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.ui.theme.GamesCollectorTheme
+
 
 @Composable
-fun GameLisItem(
-    game: Game,
-    modifier: Modifier = Modifier
-) {
+fun GameListItem( game: Game,) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,7 +37,7 @@ fun GameLisItem(
                 .data(game.image)
                 .crossfade(true)
                 .build(),
-            contentDescription = "pokemon_image",
+            contentDescription = "game_image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(CircleShape)
@@ -49,11 +55,13 @@ fun GameLisItem(
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "XP: ${game.released}", style = MaterialTheme.typography.body1)
+                Text(text = "Released: ${game.released}", style = MaterialTheme.typography.body1)
                 Spacer(modifier = Modifier.width(8.dp))
-                //Text(text = "Weight: ${pokemon.weight}", style = MaterialTheme.typography.body1)
             }
         }
     }
-
 }
+
+
+
+

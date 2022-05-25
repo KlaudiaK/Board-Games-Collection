@@ -1,23 +1,16 @@
 package com.klaudiak.gamescollector.di
 
 import android.content.Context
-import com.klaudiak.gamescollector.data.repository.MainRepository
+import com.klaudiak.gamescollector.data.local.AppDatabase
+import com.klaudiak.gamescollector.data.remote.reponses.GameItemResponse
 import com.klaudiak.gamescollector.domain.Game
-import com.klaudiak.gamescollector.utils.mappers.DatabaseMapper
 import com.klaudiak.gamescollector.utils.mappers.EntityMapper
 import com.klaudiak.gamescollector.utils.mappers.NetworkMapper
-import com.klaudiak.gamescollector.data.local.AppDatabase
-import com.klaudiak.gamescollector.data.local.GameDao
-import com.klaudiak.gamescollector.data.remote.NetworkService
-import com.klaudiak.gamescollector.data.remote.reponses.GameResponse
-import com.github.slashrootv200.retrofithtmlconverter.HtmlConverterFactory
-import com.klaudiak.gamescollector.data.remote.reponses.GameItemResponse
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module

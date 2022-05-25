@@ -45,7 +45,6 @@ data class GameItemResponse(
 
 
 
-
     @field:Element(name = "yearpublished", required = false)
     @param:Element(name = "yearpublished", required = false)
     var year: YearPublished? = null,
@@ -53,7 +52,6 @@ data class GameItemResponse(
     @field:Element(name = "statistics", required = false)
     @param:Element(name = "statistics", required = false)
     var statistics: Statistics? = null,
-
 
 
     )
