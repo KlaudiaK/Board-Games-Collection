@@ -22,8 +22,8 @@ class GameViewModel @Inject constructor(
 ) : ViewModel() {
     var state by mutableStateOf(GamesListScreenState())
 
-    var games by mutableStateOf(emptyList<Game>())
-    var game by mutableStateOf(Game("", "", "", "", ""))
+  //  var games by mutableStateOf(emptyList<Game>())
+    //var game by mutableStateOf(Game("", "", "", "", ""))
 
     fun getGames(){
         viewModelScope.launch {
@@ -61,26 +61,36 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    fun syncData(username: String){
-
+    fun syncData(username: String) {
 
         viewModelScope.launch {
-            //   Log.i("name", username)
             gameRepository.getGamesSynchronize(username, "1", "boardgame").collect { response ->
                 when (response) {
                     is DataState.Loading -> Unit
                     is DataState.Error<*> -> Unit
                     is DataState.Success -> {
-
                         response.data.let {
-
 
                         }
                     }
                 }
             }
+
+
+            gameRepository.getExtensionsSynchronize(username, "boardgameexpansion")
+                .collect { response ->
+                    when (response) {
+                        is DataState.Loading -> Unit
+                        is DataState.Error<*> -> Unit
+                        is DataState.Success -> {
+                            response.data.let {
+
+                            }
+                        }
+                    }
+                }
+            //  gameRepository.getGamesSynchronize(username, )
         }
-      //  gameRepository.getGamesSynchronize(username, )
     }
 
     //TODO count games, count extensions, last sync
@@ -126,3 +136,12 @@ sealed class GamesListScreenEvent {
     object OnGameClick: GamesListScreenEvent()
 
 }
+
+/*
+data class SortOptions {
+    val ID,
+    val TITLE,
+    val RATING
+}
+
+ */

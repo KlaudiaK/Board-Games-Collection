@@ -109,14 +109,17 @@ fun ClearAllDialogUI(
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
                 }
-                TextButton(onClick = onConfirm) {
+                TextButton(onClick = {
+                    onConfirm
+                    navController.navigate("register")
+                }) {
                     Text(
                         "Yes",
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Black,
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
-                    navController.navigate("register")
+
                 }
             }
         }

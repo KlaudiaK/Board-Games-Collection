@@ -20,8 +20,8 @@ private val LightColorPalette = lightColors(
     secondary = Sand100,
     error = Red80,
     onPrimary = NavyBlue80,
-    onSecondary = NavyBlue80
-
+    onSecondary = NavyBlue80,
+    onSurface = Sand60
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,

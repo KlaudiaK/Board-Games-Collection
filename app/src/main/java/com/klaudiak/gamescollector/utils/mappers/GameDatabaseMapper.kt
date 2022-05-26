@@ -6,7 +6,7 @@ import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.domain.GameInfo
 import javax.inject.Inject
 
-class DatabaseMapper @Inject constructor() : EntityMapper<GameEntity, Game>{
+class GameDatabaseMapper @Inject constructor() : EntityMapper<GameEntity, Game>{
     override fun mapFromEntity(entity: GameEntity): Game {
         return Game(
             id = entity.id,

@@ -3,9 +3,13 @@ package com.klaudiak.gamescollector.data.local
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.klaudiak.gamescollector.data.entities.ExtensionEntity
+import com.klaudiak.gamescollector.data.entities.GameEntity
 
 @Dao
 interface ExtensionDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(extensions: List<ExtensionEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(extension: ExtensionEntity)
@@ -17,9 +21,9 @@ interface ExtensionDao {
     suspend fun deleteAllExtensions()
 
     @Query("SELECT * FROM extensions")
-    fun getAllExtensionsItems(): LiveData<List<ExtensionEntity>>
+    fun getAllExtensionsItems(): List<ExtensionEntity>
 
     @Query("SELECT COUNT(*) FROM extensions")
-    fun countAll(): LiveData<Int>
+    fun countAll(): Int
 
 }

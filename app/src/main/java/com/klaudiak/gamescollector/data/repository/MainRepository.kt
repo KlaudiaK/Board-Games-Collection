@@ -1,15 +1,14 @@
 package com.klaudiak.gamescollector.data.repository
 
-import com.klaudiak.gamescollector.data.entities.Info
 import com.klaudiak.gamescollector.data.local.GameDao
 import com.klaudiak.gamescollector.data.local.InfoDao
 import com.klaudiak.gamescollector.data.remote.NetworkService
 import com.klaudiak.gamescollector.data.remote.reponses.GameItemResponse
 import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.utils.DataState
-import com.klaudiak.gamescollector.utils.mappers.DatabaseMapper
+import com.klaudiak.gamescollector.utils.mappers.GameDatabaseMapper
 import com.klaudiak.gamescollector.utils.mappers.DatabaseUserMapper
-import com.klaudiak.gamescollector.utils.mappers.NetworkMapper
+import com.klaudiak.gamescollector.utils.mappers.GameNetworkMapper
 import com.klaudiak.gamescollector.utils.mappers.UserMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,8 +20,8 @@ class MainRepository @Inject constructor(
     private val gameDao: GameDao,
     private val infoDao: InfoDao,
     private val networkService: NetworkService,
-    private val databaseMapper: DatabaseMapper,
-    private val networkMapper: NetworkMapper,
+    private val gameDatabaseMapper: GameDatabaseMapper,
+    private val gameNetworkMapper: GameNetworkMapper,
     private val databaseUserMapper : DatabaseUserMapper,
     private val userMapper: UserMapper
 ) {
@@ -36,9 +35,9 @@ class MainRepository @Inject constructor(
             val gamesItems: ArrayList<GameItemResponse>? =
                 networkService.gamesListFromApi("batman", "1", "boardgame").item
 
-            val games = networkMapper.mapFromEntityList(gamesItems)
-            val gamesDB =  databaseMapper.mapToListEntities(games)
-            val gamesEntities = databaseMapper.mapToListEntities(games)
+            val games = gameNetworkMapper.mapFromEntityList(gamesItems)
+            val gamesDB =  gameDatabaseMapper.mapToListEntities(games)
+            val gamesEntities = gameDatabaseMapper.mapToListEntities(games)
 
             val cachedGames = gameDao.getAllGameItems()
 

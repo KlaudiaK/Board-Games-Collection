@@ -6,33 +6,31 @@ import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 
 
-@Root(name = "items")
+@Root(name = "items", strict = false)
 data class ExtensionResponse (
-    @param:ElementList(inline = true)
-    @get:ElementList(name= "items")
-    val  list: List<Item>? = null
+    @field:ElementList(name = "item", inline = true)
+    @param:ElementList(name = "item", inline = true)
+    val  list: ArrayList<ExtensionItemResponse>? = null
 
-) {
-    @Root(name = "item", strict = false)
-    data class Item(
+)
 
-        @param:Attribute(name = "objectid")
-        @get:Attribute(name = "objectid")
-        val id: String? = null,
+@Root(name = "item", strict = false)
+data class ExtensionItemResponse(
 
-
-        @param:Element(name = "name")
-        @get:Element(name = "name")
-        var title: String? = null,
-
-        @param:Element
-        @get:Element(name = "image")
-        val image: String? = null,
-
-        @param:Element(name = "yearpublished")
-        @get:Element(name = "yearpublished")
-        val year: String? = null
+    @param:Attribute(name = "objectid", required = false)
+    @field:Attribute(name = "objectid", required = false)
+    val id: String,
 
 
-    )
-}
+    @param:Element(name = "name", required = false)
+    @field:Element(name = "name", required = false)
+    var title: String? = null,
+
+    @param:Element(name = "image", required = false)
+    @field:Element(name = "image", required = false)
+    val image: String? = null,
+
+    @param:Element(name = "yearpublished", required = false)
+    @field:Element(name = "yearpublished", required = false)
+    val year: String? = null
+)

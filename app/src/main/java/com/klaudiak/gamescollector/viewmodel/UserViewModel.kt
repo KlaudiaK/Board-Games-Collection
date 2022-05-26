@@ -1,6 +1,8 @@
 package com.klaudiak.gamescollector.viewmodel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,7 +17,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 
@@ -59,6 +66,19 @@ class UserViewModel @Inject constructor(
     fun onClearAllDialogConfirm() {
         _showClearAllDialog.value = false
         // Continue with executing the confirmed action
+        viewModelScope.launch {
+            gameRepository.deleteData().collect() { response ->
+                when (response) {
+                    is DataState.Loading -> {Log.i("DELETED", "DELETED")}
+                    is DataState.Error<*> -> Unit
+                    is DataState.Success -> {
+                        response.data.let { deleted ->
+                            Log.i("DELETED", deleted.toString())
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun onClearAllDialogDismiss() {
@@ -77,6 +97,23 @@ class UserViewModel @Inject constructor(
                     is DataState.Success -> {
                         response.data.let { count ->
                             state = state.copy(userGamesNum = count)
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun getExtensionsCount() {
+        viewModelScope.launch {
+            gameRepository.getUserExtensionsCount().collect { response ->
+                when (response) {
+                    is DataState.Loading -> {}
+                    is DataState.Error<*> -> Unit
+                    is DataState.Success -> {
+                        response.data.let { count ->
+                            state = state.copy(userExtensionsNum = count)
                         }
                     }
                 }
@@ -106,6 +143,45 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    fun getLastSyncDate() {
+        viewModelScope.launch {
+            gameRepository.getLastSyncDate().collect { response ->
+                when (response) {
+                    is DataState.Loading -> {}
+                    is DataState.Error<*> -> Unit
+                    is DataState.Success -> {
+                        response.data.let { user ->
+                            //state.username = user
+                            //   Log.i("Repo view model", state.toString())}
+                            val res = response.data
+                            //  state.value.username = user
+                            response.data.let { value -> state = state.copy(lastSyncDate = value) }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun synchronizeData(){
+      //  val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy HH:MM:SS")
+      //  val currentDT: Date = simpleDateFormat.format(Date())
+
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val currentTime = current.format(formatter)
+
+        val pattern = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
+        Log.i("DATE", current.toString())
+        //c.add(Calendar.DATE, 1)
+        //Log.i("DATE",  LocalDateTime.parse(state.lastSyncDate, pattern).plusSeconds(80).isAfter(current).toString())
+        Log.i("DATE", current.isAfter(LocalDateTime.parse(state.lastSyncDate, pattern).plusDays(1)).toString())
+        ///val simpleDateFormat= SimpleDateFormat("dd-MM-yyyy HH:MM:SS")
+        //val currentDT: Date = simpleDateFormat.format(Date())
+      //  if(simpleDateFormat.format(state.lastSyncDate).plus()   )
+    }
+
 
     fun saveUser(username: String) {
         viewModelScope.launch {
@@ -122,14 +198,12 @@ class UserViewModel @Inject constructor(
                         }
                     }
                 }
-                //gameRepository.saveUser(username)
-                Log.i("after", "userinserted!")
-                //gameRepository.getGamesSynchronize(username, "1", "boardgame")
+
             }
         }
     }
 
-        //TODO count games, count extensions, last sync
+
 
 
         fun onEvent(event: HomeScreenEvent) {

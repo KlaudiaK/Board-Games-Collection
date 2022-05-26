@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.klaudiak.gamescollector.R
 import com.klaudiak.gamescollector.viewmodel.GamesListScreenEvent
+
 import kotlinx.coroutines.launch
 @Composable
 fun GameListScreen(
@@ -33,38 +34,48 @@ fun GameListScreen(
     val context = LocalContext.current
     gamesViewModel.getGames()
     val state = gamesViewModel.state
+    val bodyContent = remember { mutableStateOf(SortOpt.UNSORTED) }
 
-/*
 
-    TopAppBar(
-        backgroundColor = backgroundColor,
-        title = { Text(
-            text = "Title",
-            style = MaterialTheme.typography.h6,
-           // color = contentColor
-        )},
-        navigationIcon = { IconButton(onClick = {}) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-              //  tint = contentColor
-            )
-        }},
-        actions = {
+    Scaffold(
+        topBar =
 
-                IconButton(onClick = {}) {
-                    Icon(
-                       painter = painterResource(id = R.drawable.sort),
-                        contentDescription = "Share",
-                        tint = Color.White
+        {
+            TopAppBar(
+                backgroundColor = backgroundColor,
+                title = {
+                    Text(
+                        text = "Title",
+                        style = MaterialTheme.typography.h6,
+                        // color = contentColor
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {}) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            //  tint = contentColor
+                        )
+                    }
+                },
+                actions = {
+                    SortMenu(bodyContent = bodyContent)
+
+                    IconButton(onClick = {  }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.sort),
+                            contentDescription = "Share",
+                            tint = Color.White
+                        )
+                    }
+
                 }
 
-        }
-    )
+            )
+        },
 
- */
-
+        ) {
 
 
         Column(
@@ -110,7 +121,7 @@ fun GameListScreen(
                 }
             }
         }
-
+}
 
 
 

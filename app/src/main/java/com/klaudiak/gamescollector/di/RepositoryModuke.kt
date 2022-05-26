@@ -1,14 +1,12 @@
 package com.klaudiak.gamescollector.di
 
+import com.klaudiak.gamescollector.data.local.ExtensionDao
 import com.klaudiak.gamescollector.data.local.GameDao
 import com.klaudiak.gamescollector.data.local.InfoDao
 import com.klaudiak.gamescollector.data.remote.NetworkService
 import com.klaudiak.gamescollector.data.repository.GamesRepositoryImpl
 import com.klaudiak.gamescollector.data.repository.MainRepository
-import com.klaudiak.gamescollector.utils.mappers.DatabaseMapper
-import com.klaudiak.gamescollector.utils.mappers.DatabaseUserMapper
-import com.klaudiak.gamescollector.utils.mappers.NetworkMapper
-import com.klaudiak.gamescollector.utils.mappers.UserMapper
+import com.klaudiak.gamescollector.utils.mappers.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,18 +20,25 @@ object RepositoryModule {
     @Singleton
     fun provideGameRepository(
         gameDao: GameDao,
+        extensionDao: ExtensionDao,
         infoDao: InfoDao,
+
         networkService: NetworkService,
-        databaseMapper: DatabaseMapper,
-        networkMapper: NetworkMapper
+        gameDatabaseMapper: GameDatabaseMapper,
+        extensionDatabaseMapper: ExtensionDatabaseMapper,
+        gameNetworkMapper: GameNetworkMapper,
+        extensionNetworkMapper: ExtensionNetworkMapper
 
     ) : GamesRepositoryImpl {
         return GamesRepositoryImpl(
             gameDao,
+            extensionDao,
             infoDao,
             networkService,
-            databaseMapper,
-            networkMapper)
+            gameDatabaseMapper,
+            extensionDatabaseMapper,
+            gameNetworkMapper,
+        extensionNetworkMapper)
     }
     @Provides
     @Singleton
@@ -41,9 +46,9 @@ object RepositoryModule {
         gameDao: GameDao,
         infoDao: InfoDao,
         networkService: NetworkService,
-        databaseMapper: DatabaseMapper,
+        gameDatabaseMapper: GameDatabaseMapper,
 
-        networkMapper: NetworkMapper,
+        gameNetworkMapper: GameNetworkMapper,
         databaseUserMapper: DatabaseUserMapper,
         userMapper: UserMapper
     ) : MainRepository {
@@ -51,8 +56,8 @@ object RepositoryModule {
             gameDao,
             infoDao,
             networkService,
-            databaseMapper,
-            networkMapper,
+            gameDatabaseMapper,
+            gameNetworkMapper,
             databaseUserMapper,
             userMapper)
     }

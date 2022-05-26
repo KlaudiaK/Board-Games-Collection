@@ -31,6 +31,7 @@ fun NavigationComponent(viewModel: GameViewModel,
         }
         composable("extension_list") {
             //GamesList()
+            ExtensionListScreen(navController = navController)
         }
         composable("ranking_history") {
             //GamesList()

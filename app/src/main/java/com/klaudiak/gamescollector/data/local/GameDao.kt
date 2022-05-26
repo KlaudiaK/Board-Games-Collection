@@ -29,6 +29,17 @@ interface GameDao {
 
     @Query("SELECT * FROM games WHERE id = :id")
     fun getGameById(id: String): GameEntity
+
+
+    @Query("SELECT * FROM games ORDER BY released")
+    fun getGamesSortedByReleaseYear(): List<GameEntity>
+
+    @Query("SELECT * FROM games ORDER BY game_title")
+    fun getGamesSortedByTitle(): List<GameEntity>
+
+
+    @Query("SELECT * FROM games ORDER BY rating")
+    fun getGamesSortedByRating(): List<GameEntity>
 }
 
 

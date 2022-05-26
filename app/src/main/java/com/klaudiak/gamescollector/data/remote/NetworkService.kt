@@ -14,7 +14,7 @@ interface NetworkService {
         @Query("subtype") subtype: String
     ) : GamesResponse
 
-    @GET("/xmlapi2/collection")
+    @GET("/xmlapi2/collection?")
     suspend fun getUserExtensions(
         @Query("username") username: String,
         @Query("subtype") subtype: String
