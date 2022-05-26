@@ -8,7 +8,7 @@ import com.klaudiak.gamescollector.data.entities.GameEntity
 import com.klaudiak.gamescollector.data.entities.ExtensionEntity
 import com.klaudiak.gamescollector.data.entities.Info
 
-@Database(entities = [GameEntity::class, ExtensionEntity::class, Info::class], version = 1, exportSchema = false)
+@Database(entities = [GameEntity::class, ExtensionEntity::class, Info::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun gameDao(): GameDao

@@ -14,10 +14,13 @@ interface InfoDao {
     @Delete
     suspend fun delete(appInfo: Info)
 
+    @Query("DELETE FROM info")
+    fun deleteAll()
+
     @Query("SELECT last_sync FROM info")
     fun getLastSyncDate(): String
 
-    @Query("SELECT username FROM info")
+    @Query("Select username FROM info ORDER BY username DESC  Limit 1")
     fun getUsername(): String
 
     @Query("UPDATE info SET last_sync=:syncDate")

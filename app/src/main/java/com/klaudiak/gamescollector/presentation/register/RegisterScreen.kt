@@ -7,12 +7,12 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.klaudiak.gamescollector.viewmodel.GameViewModel
 import com.klaudiak.gamescollector.viewmodel.RegisterScreenEvent
@@ -21,9 +21,8 @@ import com.klaudiak.gamescollector.viewmodel.RegisterScreenEvent
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    gameViewModel: GameViewModel
+    gameViewModel: GameViewModel = hiltViewModel<GameViewModel>()
 ) {
-
 
 
     Column(modifier = Modifier
@@ -47,8 +46,10 @@ fun RegisterScreen(
             label = { Text(text = "Username") }
         )
         Button(onClick = {
-            gameViewModel
-            .onEvent(RegisterScreenEvent.OnRegisterClickedEvent(username.value.text));
+            gameViewModel.saveUser(username.value.text)
+            gameViewModel.syncData(username.value.text)
+
+            //.onRegisterEvent(RegisterScreenEvent.OnRegisterClickedEvent(username.value.text));
             navController.navigate("home")
                          },
             modifier = Modifier

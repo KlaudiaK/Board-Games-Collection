@@ -44,7 +44,7 @@ class DatabaseUserMapper @Inject constructor() : EntityMapper<Info, GameInfo> {
 
 
     override fun mapToEntity(domainModel: GameInfo): Info {
-        return Info(username = domainModel.username!!, lastSyncDate = domainModel.lastSync)
+        return Info(null, username = domainModel.username!!, lastSyncDate = domainModel.lastSync)
     }
 
 }

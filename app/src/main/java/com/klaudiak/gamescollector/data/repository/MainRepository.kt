@@ -54,7 +54,7 @@ class MainRepository @Inject constructor(
 
     }
 
-
+/*
     suspend fun getUserFirstTime(username: String): Flow<DataState<String?>> = flow{
         emit(DataState.Loading)
         try{
@@ -63,7 +63,7 @@ class MainRepository @Inject constructor(
 
            // val cachedGames = gameDa6o.getAllGameItems()
             val user = userMapper.mapFromEntity(usernameFrom)
-            infoDao.insert(Info(user.user!!, null))
+            infoDao.insert(Info(0,"Anna", "06;0606"))
             val usernameFromDb = infoDao.getUsername()
            // val userInfoFromDB = infoDao.getUsername()
             emit(DataState.Success(usernameFromDb))
@@ -72,10 +72,12 @@ class MainRepository @Inject constructor(
         }
     }
 
+ */
 
 
 
 
+/*
     suspend fun getUsername(): Flow<DataState<String?>> = flow{
         emit(DataState.Loading)
         try{
@@ -88,6 +90,8 @@ class MainRepository @Inject constructor(
 
        }
    }
+
+ */
 }
 
 

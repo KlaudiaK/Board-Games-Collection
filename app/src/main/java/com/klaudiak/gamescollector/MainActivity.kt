@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private val gameViewModel: GameViewModel by viewModels()
     private val viewModel: MainViewModel by viewModels()
-    private val userViewModel:UserViewModel by viewModels()
+
     @Inject
     lateinit var networkService: NetworkService
 
@@ -48,10 +48,9 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
 
             GamesCollectorTheme {
-                Scaffold {
+                Scaffold() {
                     NavigationComponent(
                         gameViewModel,
-                        userViewModel,
                         navController)
                 }
             }

@@ -13,21 +13,21 @@ import com.klaudiak.gamescollector.viewmodel.UserViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationComponent(viewModel: GameViewModel,
-                        userViewModel: UserViewModel,
                         navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = "register"
     ) {
         composable("register") {
-            RegisterScreen(navController, viewModel)
+            RegisterScreen(navController)
         }
         composable("home") {
             //GamesList()
-            HomeScreen(navController, userViewModel)
+            HomeScreen(navController)
         }
         composable("game_list") {
             //GamesList()
+            GameListScreen(navController = navController)
         }
         composable("extension_list") {
             //GamesList()

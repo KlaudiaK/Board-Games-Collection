@@ -25,13 +25,19 @@ import com.klaudiak.gamescollector.ui.theme.GamesCollectorTheme
 
 
 @Composable
-fun GameListItem( game: Game,) {
+fun GameListItem(
+    game: Game,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Text(text = game.id,
+        modifier = Modifier.padding(end = 10.dp))
+        Spacer(modifier = Modifier.width(24.dp))
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(game.image)
@@ -59,6 +65,8 @@ fun GameListItem( game: Game,) {
                 Spacer(modifier = Modifier.width(8.dp))
             }
         }
+
+
     }
 }
 

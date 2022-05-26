@@ -14,7 +14,7 @@ class NetworkMapper @Inject constructor() : EntityMapper<GameItemResponse, Game>
             id = entity.id,
             name = entity.title,
             image = entity.image,
-            released = entity.year?.year,
+            released = entity.year,
             rating = entity.statistics?.stats?.pos
         )
     }

@@ -25,7 +25,7 @@ interface GameDao {
     fun getAllGameItems(): List<GameEntity>
 
     @Query("SELECT COUNT(*) FROM games")
-    fun countAll(): Flow<Int>
+    fun countAll(): Int
 
     @Query("SELECT * FROM games WHERE id = :id")
     fun getGameById(id: String): GameEntity

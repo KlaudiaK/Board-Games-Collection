@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "info")
 data class Info(
-    @PrimaryKey @NotNull val username: String,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @ColumnInfo val username: String,
     @ColumnInfo(name = "last_sync") val lastSyncDate: String?
 )

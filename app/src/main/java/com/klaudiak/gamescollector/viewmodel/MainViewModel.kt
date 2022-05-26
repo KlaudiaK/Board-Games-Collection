@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
         private set
 
     init {
-        getGames("rahdo", "1", "boardgame")
+       // getGames("rahdo", "1", "boardgame")
     }
 
 
@@ -73,12 +73,3 @@ sealed class MainStateEvent{
     object None: MainStateEvent()
 }
 
-data class GamesListScreenState(
-    var isRefreshing: Boolean = false,
-    val gamesList: List<Game> = mutableStateListOf<Game>()
-)
-
-sealed class GamesListScreenEvent {
-    object OnGameClick: GamesListScreenEvent()
-
-}
