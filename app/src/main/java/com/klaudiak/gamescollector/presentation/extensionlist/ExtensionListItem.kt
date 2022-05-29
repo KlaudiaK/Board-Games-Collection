@@ -19,7 +19,6 @@ import com.klaudiak.gamescollector.domain.Extension
 @Composable
 fun ExtensionListItem(
     extension: Extension,
-    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = Modifier
