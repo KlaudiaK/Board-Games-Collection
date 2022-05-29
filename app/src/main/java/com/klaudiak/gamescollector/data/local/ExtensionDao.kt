@@ -1,9 +1,7 @@
 package com.klaudiak.gamescollector.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.klaudiak.gamescollector.data.entities.ExtensionEntity
-import com.klaudiak.gamescollector.data.entities.GameEntity
 
 @Dao
 interface ExtensionDao {
@@ -25,5 +23,12 @@ interface ExtensionDao {
 
     @Query("SELECT COUNT(*) FROM extensions")
     fun countAll(): Int
+
+    @Query("SELECT * FROM extensions ORDER BY released")
+    fun getExtensionSortedByReleaseYear(): List<ExtensionEntity>
+
+    @Query("SELECT * FROM extensions ORDER BY extension_title")
+    fun getExtensionSortedByTitle(): List<ExtensionEntity>
+
 
 }

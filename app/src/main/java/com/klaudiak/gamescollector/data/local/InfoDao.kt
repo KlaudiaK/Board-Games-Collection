@@ -2,8 +2,6 @@ package com.klaudiak.gamescollector.data.local
 
 import androidx.room.*
 import com.klaudiak.gamescollector.data.entities.Info
-import com.klaudiak.gamescollector.domain.Username
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface InfoDao {

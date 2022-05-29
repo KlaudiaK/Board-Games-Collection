@@ -1,14 +1,11 @@
 package com.klaudiak.gamescollector.viewmodel
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.klaudiak.gamescollector.data.repository.GamesRepositoryImpl
 import com.klaudiak.gamescollector.domain.Game
+import com.klaudiak.gamescollector.presentation.SortOpt
 import com.klaudiak.gamescollector.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,42 +15,84 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     private val gameRepository: GamesRepositoryImpl
-    //private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var state by mutableStateOf(GamesListScreenState())
+    var registerState by mutableStateOf(RegisterScreenState())
 
-  //  var games by mutableStateOf(emptyList<Game>())
-    //var game by mutableStateOf(Game("", "", "", "", ""))
-
-    fun getGames(){
+    fun getGames(bodyContent: MutableState<SortOpt>){
         viewModelScope.launch {
-            gameRepository.getGames().collect{ response ->
-               when(response) {
-                   is DataState.Loading -> Unit
-                   is DataState.Error<*> -> Unit
-                   is DataState.Success -> {
-                       Log.i("GAMES", response.data.toString())
-                       response.data.let { gamesList ->  state.gamesList = gamesList}
-                       Log.i("GAMES", state.gamesList.size.toString())
-                   }
-               }
+            when(bodyContent.value){
+                SortOpt.UNSORTED -> gameRepository.getGames().collect{ response ->
+                    when(response) {
+                        is DataState.Success -> {
+                            response.data.let { gamesList ->  state.gamesList = gamesList}
+                        }
+                    }
+                }
+                SortOpt.RELEASE_YEAR -> gameRepository.getGamesSortedByReleaseYear().collect{ response ->
+                    when(response) {
+                        is DataState.Success -> {
+                            response.data.let { gamesList ->  state.gamesList = gamesList}
+
+                        }
+                    }
+                }
+                SortOpt.TITLE -> gameRepository.getGamesSortedByTitle().collect{ response ->
+                    when(response) {
+                        is DataState.Success -> {
+                            response.data.let { gamesList ->  state.gamesList = gamesList}
+                        }
+                    }
+                }
+                SortOpt.RATING -> gameRepository.getGamesSortedByRating().collect{ response ->
+                    when(response) {
+                        is DataState.Success -> {
+                            response.data.let { gamesList ->  state.gamesList = gamesList}
+
+                        }
+                    }
+                }
+
             }
+
         }
     }
 
 
     fun saveUser(username: String) {
         viewModelScope.launch {
-            //   Log.i("name", username)
             gameRepository.saveUser(username).collect { response ->
                 when (response) {
-                    is DataState.Loading -> Unit
-                    is DataState.Error<*> -> Unit
+                    is DataState.Loading -> {registerState.isLoading = true}
+                    is DataState.Error<*> -> { response.let {
+                        registerState.incorrectUsername = true }}
                     is DataState.Success -> {
 
                         response.data.let {
+                            registerState.incorrectUsername = false
+                            registerState.isLoading = false
+
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
+
+    fun getUserFromApi(username: String) {
+
+        viewModelScope.launch {
+            gameRepository.getUserFromApi(username).collect { response ->
+                when (response) {
+                    is DataState.Loading -> Unit
+                    is DataState.Error<*> -> {
+                        registerState.incorrectUsername = true
+                    }
+                    is DataState.Success -> {
+                        response.data.let {
+                            registerState.incorrectUsername = false
                         }
                     }
                 }
@@ -89,44 +128,17 @@ class GameViewModel @Inject constructor(
                         }
                     }
                 }
-            //  gameRepository.getGamesSynchronize(username, )
-        }
-    }
-
-    //TODO count games, count extensions, last sync
-
-    //@RequiresApi(Build.VERSION_CODES.O)
-    fun onRegisterEvent(event: RegisterScreenEvent){
-        when(event){
-           is RegisterScreenEvent.OnRegisterClickedEvent -> {
-              // Log.i("name", event.username)
-               viewModelScope.launch {
-                   Log.i("name", event.username)
-
-                   gameRepository.saveUser("Rahdo")
-                   Log.i("after", "userinserted!")
-                    gameRepository.getGamesSynchronize(event.username, "1", "boardgame")
-               }
-           //    Log.i("name", event.username)
-           }
         }
     }
 
 
-    fun onGamesListEvent(event: GamesListScreenEvent){
-        when(event){
-            is GamesListScreenEvent.OnGameClick -> {
-
-
-
-            }
-        }
-    }
 }
 
-sealed class RegisterScreenEvent{
-    data class OnRegisterClickedEvent(val username: String) : RegisterScreenEvent()
-}
+data class RegisterScreenState(
+    var incorrectUsername: Boolean = true,
+    var isLoading : Boolean = true
+)
+
 data class GamesListScreenState(
     var isRefreshing: Boolean = false,
     var gamesList: List<Game> = mutableStateListOf<Game>()
@@ -134,14 +146,5 @@ data class GamesListScreenState(
 
 sealed class GamesListScreenEvent {
     object OnGameClick: GamesListScreenEvent()
-
 }
 
-/*
-data class SortOptions {
-    val ID,
-    val TITLE,
-    val RATING
-}
-
- */

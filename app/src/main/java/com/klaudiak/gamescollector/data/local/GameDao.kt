@@ -1,9 +1,10 @@
 package com.klaudiak.gamescollector.data.local
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.klaudiak.gamescollector.data.entities.GameEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GameDao {
@@ -38,8 +39,12 @@ interface GameDao {
     fun getGamesSortedByTitle(): List<GameEntity>
 
 
-    @Query("SELECT * FROM games ORDER BY rating")
+    @Query("SELECT * FROM games WHERE rating != 'Not Ranked' ORDER BY rating*1 ASC")
     fun getGamesSortedByRating(): List<GameEntity>
+
+
+    @Query("SELECT rating FROM games WHERE id = :id")
+    fun getRankingPosition(id: String): String
 }
 
 

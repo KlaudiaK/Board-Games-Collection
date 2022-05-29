@@ -1,10 +1,6 @@
 package com.klaudiak.gamescollector.data.remote.reponses
 
 
-import android.media.Image
-import android.net.Uri
-import androidx.annotation.AttrRes
-import com.klaudiak.gamescollector.domain.Game
 import org.simpleframework.xml.*
 import java.net.URL
 

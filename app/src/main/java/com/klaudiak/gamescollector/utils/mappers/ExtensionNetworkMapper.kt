@@ -1,6 +1,6 @@
 package com.klaudiak.gamescollector.utils.mappers
 
-import android.util.Log
+
 import com.klaudiak.gamescollector.data.remote.reponses.ExtensionItemResponse
 import com.klaudiak.gamescollector.domain.Extension
 import com.klaudiak.gamescollector.domain.Id
@@ -15,7 +15,6 @@ class ExtensionNetworkMapper @Inject constructor() : EntityMapper<ExtensionItemR
     }
 
     fun mapFromEntityList(entities: ArrayList<ExtensionItemResponse>?): List<Extension>? {
-        Log.i("Info","In mapper")
         return entities?.map { mapFromEntity(it) }
     }
 

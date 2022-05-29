@@ -1,9 +1,10 @@
 package com.klaudiak.gamescollector.data.remote.reponses
 
-import com.klaudiak.gamescollector.domain.Game
-import org.simpleframework.xml.*
+import org.simpleframework.xml.Attribute
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Root
 import java.net.URL
-
 
 
 @Root(name = "items", strict = false)
@@ -45,13 +46,20 @@ data class GameItemResponse(
 
 
 
+
+
     @field:Element(name = "yearpublished", required = false)
     @param:Element(name = "yearpublished", required = false)
     var year: String? = null,
-
+/*
     @field:Element(name = "statistics", required = false)
     @param:Element(name = "statistics", required = false)
     var statistics: Statistics? = null,
 
+ */
+
+    @field:Element(name = "stats", required = false)
+    @param:Element(name = "stats", required = false)
+    var stats: StatsResponse? = null,
 
     )

@@ -1,11 +1,8 @@
 package com.klaudiak.gamescollector
 
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
-import org.simpleframework.xml.Serializer
-import org.simpleframework.xml.core.Persister
 
 /**
  * Example local unit test, which will execute on the development machine (host).

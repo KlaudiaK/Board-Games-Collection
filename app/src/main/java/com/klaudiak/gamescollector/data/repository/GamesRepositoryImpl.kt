@@ -12,10 +12,11 @@ import com.klaudiak.gamescollector.utils.mappers.ExtensionDatabaseMapper
 import com.klaudiak.gamescollector.utils.mappers.ExtensionNetworkMapper
 import com.klaudiak.gamescollector.utils.mappers.GameDatabaseMapper
 import com.klaudiak.gamescollector.utils.mappers.GameNetworkMapper
-import kotlinx.coroutines.flow.*
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class GamesRepositoryImpl @Inject constructor(
     private val gameDao: GameDao,
@@ -29,7 +30,7 @@ class GamesRepositoryImpl @Inject constructor(
 ) {
 
     suspend fun getUserGamesCount(): Flow<DataState<Int>>{
-        var countGames : Int = 0
+        var countGames = 0
 
         return flow {
              emit(DataState.Loading)
@@ -39,7 +40,7 @@ class GamesRepositoryImpl @Inject constructor(
         }
 
     suspend fun getUserExtensionsCount(): Flow<DataState<Int>>{
-        var countExtensions : Int = 0
+        var countExtensions = 0
 
         return flow {
             emit(DataState.Loading)
@@ -62,6 +63,15 @@ class GamesRepositoryImpl @Inject constructor(
 
 
     suspend fun getLastSyncDate(): Flow<DataState<String>>{
+        return flow {
+            emit(DataState.Loading)
+            emit(DataState.Success(infoDao.getLastSyncDate()))
+        }
+    }
+
+    suspend fun updateLastSyncDate(): Flow<DataState<String>>{
+        val simpleDateFormat= SimpleDateFormat("dd-MM-yyyy")
+        simpleDateFormat.format(Date())
         return flow {
             emit(DataState.Loading)
             emit(DataState.Success(infoDao.getLastSyncDate()))
@@ -117,6 +127,23 @@ class GamesRepositoryImpl @Inject constructor(
         }
     }
 
+    suspend fun getUserFromApi(
+        username: String
+    ): Flow<DataState<Boolean>> {
+
+
+        return flow {
+            emit(DataState.Loading)
+            try{
+                val responseGamesList = networkService.getUser(username)
+                emit(DataState.Success(data = true))
+            }catch(e:RuntimeException) {
+
+            }
+        }
+    }
+
+
 
     suspend fun getGamesSynchronize(
         username: String,
@@ -129,14 +156,36 @@ class GamesRepositoryImpl @Inject constructor(
         return flow {
 
             emit(DataState.Loading)
+            try{
+                val responseGamesList = networkService.gamesListFromApi(username, stats, subtype).item
+                val games = gameNetworkMapper.mapFromEntityList(responseGamesList)
+                val gamesLocalList =  gameDatabaseMapper.mapToListEntities(games)
+                gameDao.insertAll(gamesLocalList)
+                emit(DataState.Success(data = true))
+            }catch(e:RuntimeException) {
 
-            val responseGamesList = networkService.gamesListFromApi(username, stats, subtype).item
-            val sizeFromRemote = responseGamesList?.size
-            val games = gameNetworkMapper.mapFromEntityList(responseGamesList)
-            val gamesLocalList =  gameDatabaseMapper.mapToListEntities(games)
-            gameDao.insertAll(gamesLocalList)
-            val sizeFromLocal =  gameDao.countAll()
-            emit(DataState.Success(data = true))
+            }
+
+        }
+    }
+
+
+
+    suspend fun getExtensionsSortedByReleaseYear(): Flow<DataState<List<Extension>>> {
+        return flow {
+            emit(DataState.Loading)
+            val localExtensions = extensionDao.getExtensionSortedByReleaseYear()
+            emit(DataState.Success(data = localExtensions.map { extensionDatabaseMapper.mapFromEntity(it)}))
+
+        }
+    }
+
+    suspend fun getExtensionsSortedByTitle(): Flow<DataState<List<Extension>>> {
+        return flow {
+            emit(DataState.Loading)
+            val localExtensions = extensionDao.getExtensionSortedByTitle()
+            emit(DataState.Success(data = localExtensions.map { extensionDatabaseMapper.mapFromEntity(it)}))
+
         }
     }
 
@@ -151,59 +200,59 @@ class GamesRepositoryImpl @Inject constructor(
         return flow {
 
             emit(DataState.Loading)
+            try{
+                val responseExtensionsList = networkService.getUserExtensions(username, subtype).list
+                val extensions = extensionNetworkMapper.mapFromEntityList(responseExtensionsList)
+                val extensionsLocalList =  extensionDatabaseMapper.mapToListEntities(extensions)
+                extensionDao.insertAll(extensionsLocalList)
 
-            val responseExtensionsList = networkService.getUserExtensions(username, subtype).list
-            val sizeFromRemote = responseExtensionsList?.size
-            val extensions = extensionNetworkMapper.mapFromEntityList(responseExtensionsList)
-            val extensionsLocalList =  extensionDatabaseMapper.mapToListEntities(extensions)
-            extensionDao.insertAll(extensionsLocalList)
-            val sizeFromLocal =  extensionDao.countAll()
+            }catch(e:RuntimeException){
+
+            }
             emit(DataState.Success(data = true))
         }
     }
 
-    suspend fun getUser(): Flow<DataState<String>> {
-        return flow{
-            emit(DataState.Loading)
-            val username = infoDao.getUsername()
-        }
-    }
+
 
 
     suspend fun saveUser(username: String): Flow<DataState<String>> {
-        val simpleDateFormat= SimpleDateFormat("dd-MM-yyyy HH:MM:SS")
+        val simpleDateFormat= SimpleDateFormat("dd-MM-yyyy")
         val currentDT: String = simpleDateFormat.format(Date())
 
         return flow{
-        //    infoDao.insert(Info(1,username, ""))
+            val name = ""
+            try{
+                emit(DataState.Loading)
+                networkService.gamesListFromApi(username, "1", "boardgame").item
+                infoDao.insert(Info(0,username, currentDT))
+                emit(DataState.Success(data = name))
+            }catch(e:RuntimeException){
+                emit(DataState.Error<RuntimeException>("User doesn't exist"))
 
-
-            var name = ""
-          //  val current = LocalDateTime.now()
-
-         //   val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-           // val currentDate = ""//current.format(formatter)
-           // val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-          //  val currentDate = currentDateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
-            networkService.gamesListFromApi(username, "1", "boardgame").item
-            infoDao.insert(Info(0,username, currentDT))
-            emit(DataState.Success(data = name))
-
+            }
         }
-
     }
 
 
     suspend fun deleteData(): Flow<DataState<Boolean>> {
+        infoDao.deleteAll()
+        gameDao.deleteAllGames()
+        extensionDao.deleteAllExtensions()
         return flow{
-            infoDao.deleteAll()
-            gameDao.deleteAllGames()
-            extensionDao.deleteAllExtensions()
+            emit(DataState.Loading)
             emit(DataState.Success(data = true))
         }
 
-        // TODO delete all extensions
+    }
 
+
+
+    suspend fun getLastRating(id:String): Flow<DataState<String>> {
+        return flow{
+            emit(DataState.Loading)
+            emit(DataState.Success(data = gameDao.getRankingPosition(id)))
+        }
     }
 
 

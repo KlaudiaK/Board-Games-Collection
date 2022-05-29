@@ -19,9 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.klaudiak.gamescollector.R
-
+import com.klaudiak.gamescollector.viewmodel.UserViewModel
 
 
 @Composable
@@ -30,6 +31,7 @@ fun ClearAllDialog(
     navController: NavController,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
+
 ) {
     if(show) {
         Dialog(onDismissRequest = onDismiss) {
@@ -44,7 +46,8 @@ fun ClearAllDialogUI(
     modifier: Modifier = Modifier,
     navController: NavController,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
+    userViewModel: UserViewModel = hiltViewModel<UserViewModel>()
 ){
 
     Card(
@@ -81,7 +84,8 @@ fun ClearAllDialogUI(
                         .fillMaxWidth(),
                     // style = MaterialTheme.typography.labelLarge,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.Black
                 )
                 Text(
                     text = "Are you sure?",
@@ -89,7 +93,7 @@ fun ClearAllDialogUI(
                     modifier = Modifier
                         .padding(top = 10.dp, start = 25.dp, end = 25.dp)
                         .fillMaxWidth(),
-                    // style = MaterialTheme.typography.bodyMedium
+                    color = Color.Black
                 )
             }
             //.......................................................................
@@ -110,8 +114,11 @@ fun ClearAllDialogUI(
                     )
                 }
                 TextButton(onClick = {
+                    navController.popBackStack(Screen.RegisterScreen.route, false)
+                    navController.navigate(Screen.RegisterScreen.route)
                     onConfirm
-                    navController.navigate("register")
+
+
                 }) {
                     Text(
                         "Yes",

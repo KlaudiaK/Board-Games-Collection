@@ -1,7 +1,5 @@
 package com.klaudiak.gamescollector.utils
 
-import java.lang.Exception
-
 
 sealed class Resources<T>(
     val data: T? = null,

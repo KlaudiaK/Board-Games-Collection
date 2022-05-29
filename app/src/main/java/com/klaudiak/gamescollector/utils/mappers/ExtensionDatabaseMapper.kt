@@ -1,9 +1,7 @@
 package com.klaudiak.gamescollector.utils.mappers
 
 import com.klaudiak.gamescollector.data.entities.ExtensionEntity
-import com.klaudiak.gamescollector.data.entities.GameEntity
 import com.klaudiak.gamescollector.domain.Extension
-import com.klaudiak.gamescollector.domain.Game
 import javax.inject.Inject
 
 

@@ -3,38 +3,46 @@ package com.klaudiak.gamescollector.presentation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.klaudiak.gamescollector.viewmodel.GameViewModel
-import com.klaudiak.gamescollector.viewmodel.UserViewModel
+import androidx.navigation.navArgument
+import com.klaudiak.gamescollector.prefs.Preferences
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NavigationComponent(viewModel: GameViewModel,
+fun NavigationComponent(preferences: Preferences,
                         navController: NavHostController) {
+
+    val shouldShowHome = preferences.loadShouldOpenHome()
+    val startDestination = if(shouldShowHome) Screen.HomeScreen.route else Screen.RegisterScreen.route
     NavHost(
         navController = navController,
-        startDestination = "register"
+        startDestination = startDestination
     ) {
-        composable("register") {
-            RegisterScreen(navController)
+        composable(Screen.RegisterScreen.route) {
+            RegisterScreen(navController,preferences = preferences)
         }
-        composable("home") {
-            //GamesList()
+        composable(Screen.HomeScreen.route) {
             HomeScreen(navController)
         }
-        composable("game_list") {
-            //GamesList()
+        composable(Screen.GameListScreen.route) {
             GameListScreen(navController = navController)
         }
-        composable("extension_list") {
-            //GamesList()
+        composable(Screen.ExtensionListScreen.route) {
             ExtensionListScreen(navController = navController)
         }
-        composable("ranking_history") {
-            //GamesList()
+        composable(Screen.RankingHistoryScreen.route,
+        arguments = listOf(navArgument(RANKING_HISTORY_ARGUMENT_KEY){
+            type = NavType.StringType
+        })) {
+            RankingHistoryScreen(
+                navController = navController,
+               id = it.arguments?.getString(RANKING_HISTORY_ARGUMENT_KEY)
+
+            )
+
         }
     }
 }

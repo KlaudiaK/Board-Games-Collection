@@ -6,8 +6,8 @@ import com.klaudiak.gamescollector.data.remote.NetworkService
 import com.klaudiak.gamescollector.data.remote.reponses.GameItemResponse
 import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.utils.DataState
-import com.klaudiak.gamescollector.utils.mappers.GameDatabaseMapper
 import com.klaudiak.gamescollector.utils.mappers.DatabaseUserMapper
+import com.klaudiak.gamescollector.utils.mappers.GameDatabaseMapper
 import com.klaudiak.gamescollector.utils.mappers.GameNetworkMapper
 import com.klaudiak.gamescollector.utils.mappers.UserMapper
 import kotlinx.coroutines.flow.Flow

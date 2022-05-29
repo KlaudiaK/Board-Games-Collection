@@ -1,4 +1,4 @@
-package com.klaudiak.gamescollector.presentation
+package com.klaudiak.gamescollector.presentation.home
 
 data class HomeScreenState(
     var username: String = "User",

@@ -1,16 +1,12 @@
 package com.klaudiak.gamescollector.presentation
 
-import androidx.compose.material.*
 
-
-
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -19,7 +15,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.klaudiak.gamescollector.R
@@ -27,13 +22,15 @@ import com.klaudiak.gamescollector.R
 
 @Composable
 fun SyncDialog(
+    lastSyncDate: String,
     show: Boolean,
+    showProgress: Progress,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
     if(show) {
         Dialog(onDismissRequest = onDismiss) {
-            SyncDialogUI(onDismiss = onDismiss, onConfirm = onConfirm)
+            SyncDialogUI(lastSyncDate = lastSyncDate,showProgress = showProgress,onDismiss = onDismiss, onConfirm = onConfirm)
         }
     }
 }
@@ -42,6 +39,8 @@ fun SyncDialog(
 @Composable
 fun SyncDialogUI(
     modifier: Modifier = Modifier,
+    lastSyncDate: String,
+    showProgress: Progress,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ){
@@ -57,38 +56,27 @@ fun SyncDialogUI(
             modifier
                 .background(Color.White)) {
 
-            Image(
-                painter = painterResource(id = R.drawable.synchronize),
-                contentDescription = null, // decorative
-                contentScale = ContentScale.Fit,
-                colorFilter  = ColorFilter.tint(
-                    color = MaterialTheme.colors.onPrimary
-                ),
-                modifier = Modifier
-                    .padding(top = 35.dp)
-                    .height(70.dp)
-                    .fillMaxWidth(),
 
-                )
-
+            ProgressIndicator(state = showProgress)
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Last update was ",//${}",
+                    text = "Last update was $lastSyncDate",
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(top = 5.dp)
                         .fillMaxWidth(),
                    // style = MaterialTheme.typography.labelLarge,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.Black
                 )
                 Text(
-                    text = "Allow Permission to send you notifications when new art styles added.",
+                    text = "Are you sure you want to synchronize data?",
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(top = 10.dp, start = 25.dp, end = 25.dp)
                         .fillMaxWidth(),
-                   // style = MaterialTheme.typography.bodyMedium
+                    color = Color.Black
                 )
             }
             //.......................................................................
@@ -120,5 +108,53 @@ fun SyncDialogUI(
         }
     }
 }
+@Composable
+fun ProgressIndicator(
+    state: Progress,
 
+) {
+    when(state) {
+        Progress.BEFORE -> Image(
+            painter = painterResource(id = R.drawable.synchronize),
+            contentDescription = null, // decorative
+            contentScale = ContentScale.Fit,
+            colorFilter  = ColorFilter.tint(
+                color = MaterialTheme.colors.onPrimary
+            ),
+            modifier = Modifier
+                .padding(top = 35.dp)
+                .height(70.dp)
+                .fillMaxWidth(),
+
+            )
+
+        Progress.DURING ->
+            CircularProgressIndicator(
+                color = MaterialTheme.colors.onPrimary,
+                modifier = Modifier
+                    .padding(top = 45.dp, bottom = 20.dp, start = 130.dp, end = 50.dp)
+
+                    //.fillMaxWidth()
+            )
+
+
+        Progress.AFTER -> Image(
+            painter = painterResource(id = R.drawable.synchronize),
+            contentDescription = null, // decorative
+            contentScale = ContentScale.Fit,
+            colorFilter  = ColorFilter.tint(
+                color = MaterialTheme.colors.onPrimary
+            ),
+            modifier = Modifier
+                .padding(top = 35.dp)
+                .height(70.dp)
+                .fillMaxWidth(),
+
+            )
+    }
+}
+
+enum class Progress{
+    BEFORE, DURING, AFTER
+}
 

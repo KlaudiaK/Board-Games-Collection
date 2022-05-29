@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
     @Inject
-    lateinit var preferances: Preferences
+    lateinit var preferences: Preferences
 
     @Inject
     lateinit var networkService: NetworkService
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
        // deleteDatabase("")
+        val shouldShowOnboarding = preferences.loadShouldOpenHome()
         AppDatabase.getDatabase(this)
 
         supportActionBar?.hide()
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             GamesCollectorTheme {
                 Scaffold {
                     NavigationComponent(
-                        gameViewModel,
+                        preferences,
                         navController)
                 }
             }

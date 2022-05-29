@@ -1,7 +1,5 @@
 package com.klaudiak.gamescollector.di
 
-import com.bumptech.glide.load.resource.SimpleResource
-import com.github.slashrootv200.retrofithtmlconverter.HtmlConverterFactory
 import com.klaudiak.gamescollector.data.remote.NetworkService
 import dagger.Module
 import dagger.Provides

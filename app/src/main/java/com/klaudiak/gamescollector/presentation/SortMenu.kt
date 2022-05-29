@@ -3,8 +3,6 @@ package com.klaudiak.gamescollector.presentation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import com.klaudiak.gamescollector.R
 
 @Composable
-fun SortMenu(bodyContent: MutableState<SortOpt>) {
+fun SortMenu(ifGames:Boolean, bodyContent: MutableState<SortOpt>) {
     val expanded = remember { mutableStateOf(false) } // 1
 
     Box(
@@ -30,7 +28,7 @@ fun SortMenu(bodyContent: MutableState<SortOpt>) {
             Icon(
                 painter = painterResource(id = R.drawable.sort),
                 contentDescription = "Options",
-                tint = Color.White
+                tint = MaterialTheme.colors.onSecondary
             )
         }
     }
@@ -41,9 +39,9 @@ fun SortMenu(bodyContent: MutableState<SortOpt>) {
     ) {
         DropdownMenuItem(onClick = {
             expanded.value = false // 3
-            bodyContent.value = SortOpt.ID // 4
+            bodyContent.value = SortOpt.RELEASE_YEAR // 4
         }) {
-            Text("Sort by id")
+            Text("Sort by release year",  color = Color.Black)
         }
 
         Divider()
@@ -52,22 +50,25 @@ fun SortMenu(bodyContent: MutableState<SortOpt>) {
             expanded.value = false
             bodyContent.value = SortOpt.TITLE
         }) {
-            Text("Sort by title")
+            Text("Sort by title", color = Color.Black)
         }
 
-        Divider()
+        if(ifGames){
+            Divider()
 
-        DropdownMenuItem(onClick = {
-            expanded.value = false
-            bodyContent.value = SortOpt.RATING
-        }) {
-            Text("Sort by rating")
+            DropdownMenuItem(onClick = {
+                expanded.value = false
+                bodyContent.value = SortOpt.RATING
+            }) {
+                Text("Sort by rating",  color = Color.Black)
+            }
         }
+
 
 
     }
 }
 
 enum class SortOpt{
-    UNSORTED, ID, TITLE, RATING
+    UNSORTED, RELEASE_YEAR, TITLE, RATING
 }

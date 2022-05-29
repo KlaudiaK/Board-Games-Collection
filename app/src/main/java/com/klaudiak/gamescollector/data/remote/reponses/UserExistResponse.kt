@@ -1,9 +1,8 @@
 package com.klaudiak.gamescollector.data.remote.reponses
 
-import junit.framework.Assert.assertEquals
-import org.junit.Test
-import org.simpleframework.xml.*
-import org.simpleframework.xml.core.Persister
+import org.simpleframework.xml.Attribute
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.Root
 
 
 @Root(name = "user", strict =false)

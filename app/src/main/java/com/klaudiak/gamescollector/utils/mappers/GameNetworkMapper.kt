@@ -1,12 +1,10 @@
 package com.klaudiak.gamescollector.utils.mappers
 
 import android.util.Log
-import com.klaudiak.gamescollector.data.remote.reponses.ExtensionItemResponse
 import com.klaudiak.gamescollector.data.remote.reponses.GameItemResponse
+import com.klaudiak.gamescollector.data.remote.reponses.UserExistResponse
 import com.klaudiak.gamescollector.domain.Game
 import com.klaudiak.gamescollector.domain.Id
-import com.klaudiak.gamescollector.data.remote.reponses.UserExistResponse
-import com.klaudiak.gamescollector.domain.Extension
 import com.klaudiak.gamescollector.domain.Username
 import javax.inject.Inject
 
@@ -17,7 +15,7 @@ class GameNetworkMapper @Inject constructor() : EntityMapper<GameItemResponse, G
             name = entity.title,
             image = entity.image,
             released = entity.year,
-            rating = entity.statistics?.stats?.pos
+            rating = entity.stats?.rating?.ranks?.get(0)?.value
         )
     }
 
