@@ -49,40 +49,4 @@ class AppModule {
 
 }
 
-/*
-@Module
-@InstallIn(SingletonComponent::class)
-object RepositoryModule {
-
-    @Provides
-    fun provideMainRepository(
-        gameDao: GameDao,
-        networkService: NetworkService,
-        databaseMapper: DatabaseMapper,
-        networkMapper: NetworkMapper
-    ) : MainRepository {
-        return MainRepository(gameDao, networkService, databaseMapper, networkMapper)
-    }
-}
-
-
-
-@Module
-@InstallIn(SingletonComponent::class)
-object NetworkModule {
-
-
-    @Singleton
-    @Provides
-    fun provideRetrofitService(): NetworkService = Retrofit.Builder()
-        .baseUrl("https://boardgamegeek.com/wiki/page/BGG_XML_API2")
-        .addConverterFactory(HtmlConverterFactory.create("https://boardgamegeek.com/wiki/page/BGG_XML_API2"))
-        .build()
-        .create(NetworkService::class.java)
-
-
-}
-
-
- */
 

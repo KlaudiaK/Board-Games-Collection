@@ -15,7 +15,6 @@ import com.klaudiak.gamescollector.prefs.Preferences
 import com.klaudiak.gamescollector.presentation.NavigationComponent
 import com.klaudiak.gamescollector.ui.theme.GamesCollectorTheme
 import com.klaudiak.gamescollector.viewmodel.GameViewModel
-import com.klaudiak.gamescollector.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,7 +22,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private val gameViewModel: GameViewModel by viewModels()
-    private val viewModel: MainViewModel by viewModels()
+
 
     @Inject
     lateinit var preferences: Preferences
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-       // deleteDatabase("")
         val shouldShowOnboarding = preferences.loadShouldOpenHome()
         AppDatabase.getDatabase(this)
 
@@ -51,9 +49,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
-
-
 }

@@ -127,22 +127,6 @@ class GamesRepositoryImpl @Inject constructor(
         }
     }
 
-    suspend fun getUserFromApi(
-        username: String
-    ): Flow<DataState<Boolean>> {
-
-
-        return flow {
-            emit(DataState.Loading)
-            try{
-                val responseGamesList = networkService.getUser(username)
-                emit(DataState.Success(data = true))
-            }catch(e:RuntimeException) {
-
-            }
-        }
-    }
-
 
 
     suspend fun getGamesSynchronize(

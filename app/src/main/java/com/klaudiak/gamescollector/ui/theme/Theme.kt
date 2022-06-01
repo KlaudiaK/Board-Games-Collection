@@ -23,14 +23,6 @@ private val LightColorPalette = lightColors(
     onSecondary = NavyBlue100,
     onSurface = Sand60,
     background = Beige40
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
 @Composable
 fun GamesCollectorTheme(

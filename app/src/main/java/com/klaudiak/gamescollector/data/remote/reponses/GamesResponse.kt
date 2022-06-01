@@ -30,33 +30,13 @@ data class GameItemResponse(
     @field:Element(name = "image", required = false)
     @param:Element(name = "image", required = false)
     var image: String? = null,
-/*
-
-    @field:ElementList(required = false, inline = true)
-    @param:ElementList( required = false, inline = true)
-    var elementPrimaryName: Primary,
-
-
-    @param:Attribute(name = "sortindex", required = false)
-    @get:Attribute(name = "sortindex", required = false)
-    val sortindex: String ? = null,
-
-
- */
-
-
 
 
 
     @field:Element(name = "yearpublished", required = false)
     @param:Element(name = "yearpublished", required = false)
     var year: String? = null,
-/*
-    @field:Element(name = "statistics", required = false)
-    @param:Element(name = "statistics", required = false)
-    var statistics: Statistics? = null,
 
- */
 
     @field:Element(name = "stats", required = false)
     @param:Element(name = "stats", required = false)

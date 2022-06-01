@@ -80,7 +80,11 @@ fun RegisterScreen(
                         }
                         else{
                             gameViewModel.syncData(username.value.text)
-                            navController.navigate(Screen.HomeScreen.route)
+                            navController.navigate(Screen.HomeScreen.route){
+                                popUpTo(Screen.RegisterScreen.route) {
+                                    inclusive = true
+                                }
+                            }
                             preferences.shouldOpenHome(openHome = false)
                         }
                 }

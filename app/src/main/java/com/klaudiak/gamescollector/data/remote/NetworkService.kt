@@ -2,9 +2,7 @@ package com.klaudiak.gamescollector.data.remote
 
 import com.klaudiak.gamescollector.data.remote.reponses.ExtensionResponse
 import com.klaudiak.gamescollector.data.remote.reponses.GamesResponse
-import com.klaudiak.gamescollector.data.remote.reponses.UserExistResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NetworkService {
@@ -22,11 +20,6 @@ interface NetworkService {
         @Query("username") username: String,
         @Query("subtype") subtype: String
     ) : ExtensionResponse
-
-    @GET("/xmlapi2/username={username}")
-    suspend fun getUser(
-        @Path("username") username: String
-    ) : UserExistResponse
 
 
     companion object {

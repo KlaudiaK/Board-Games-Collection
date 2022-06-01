@@ -182,7 +182,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.padding(vertical = 16.dp))
             OutlinedButton(
                 onClick = {
-                    userViewModel.onOpenSyncDialogClicked()// userViewModel.synchronizeData()//
+                    userViewModel.onOpenSyncDialogClicked()
                 },
                 shape = CircleShape,
                 elevation = ButtonDefaults.elevation(8.dp),
@@ -202,7 +202,6 @@ fun HomeScreen(
 
             TextButton(
                 onClick = {
-                    //userViewModel.deleteAllData()
                     userViewModel.onOpenClearAllDialogClicked()
                 },
 

@@ -35,7 +35,4 @@ object NetworkModule {
         .build()
         .create(NetworkService::class.java)
 
-    //https://boardgamegeek.com/xmlapi2/
-    //https://boardgamegeek.com/xmlapi/boardgame/1/
-
 }

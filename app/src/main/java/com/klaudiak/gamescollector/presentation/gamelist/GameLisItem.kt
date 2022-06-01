@@ -50,6 +50,9 @@ fun GameListItem(
             modifier = Modifier
                 .clip(CircleShape)
                 .weight(0.66f)
+                .aspectRatio(
+                    ratio = 1f
+                )
         )
         Spacer(modifier = Modifier.width(24.dp))
 

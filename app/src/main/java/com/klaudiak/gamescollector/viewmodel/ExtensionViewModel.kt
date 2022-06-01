@@ -15,12 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ExtensionViewModel @Inject constructor(
     private val gameRepository: GamesRepositoryImpl
-    //private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var state by mutableStateOf(ExtensionListScreenState())
-
-    //  var games by mutableStateOf(emptyList<Game>())
-    //var game by mutableStateOf(Game("", "", "", "", ""))
 
     fun getExtensions() {
         viewModelScope.launch {
@@ -44,9 +40,7 @@ class ExtensionViewModel @Inject constructor(
                 SortOpt.UNSORTED -> gameRepository.getExtensions().collect{ response ->
                     when(response) {
                         is DataState.Success -> {
-                            //  Log.i("GAMES", response.data.toString())
                             response.data.let { extensionList ->  state.extensionList = extensionList}
-                            // Log.i("GAMES", state.gamesList.size.toString())
                         }
                     }
                 }
@@ -55,7 +49,6 @@ class ExtensionViewModel @Inject constructor(
                         is DataState.Success -> {
 
                             response.data.let { extensionList ->  state.extensionList = extensionList}
-                            // Log.i("GAMES", state.gamesList.size.toString())
                         }
                     }
                 }

@@ -5,7 +5,6 @@ import com.klaudiak.gamescollector.data.local.GameDao
 import com.klaudiak.gamescollector.data.local.InfoDao
 import com.klaudiak.gamescollector.data.remote.NetworkService
 import com.klaudiak.gamescollector.data.repository.GamesRepositoryImpl
-import com.klaudiak.gamescollector.data.repository.MainRepository
 import com.klaudiak.gamescollector.utils.mappers.*
 import dagger.Module
 import dagger.Provides
@@ -39,27 +38,6 @@ object RepositoryModule {
             extensionDatabaseMapper,
             gameNetworkMapper,
         extensionNetworkMapper)
-    }
-    @Provides
-    @Singleton
-    fun provideMainRepository(
-        gameDao: GameDao,
-        infoDao: InfoDao,
-        networkService: NetworkService,
-        gameDatabaseMapper: GameDatabaseMapper,
-
-        gameNetworkMapper: GameNetworkMapper,
-        databaseUserMapper: DatabaseUserMapper,
-        userMapper: UserMapper
-    ) : MainRepository {
-        return MainRepository(
-            gameDao,
-            infoDao,
-            networkService,
-            gameDatabaseMapper,
-            gameNetworkMapper,
-            databaseUserMapper,
-            userMapper)
     }
 
 

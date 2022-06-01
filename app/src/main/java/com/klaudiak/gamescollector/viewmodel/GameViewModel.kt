@@ -81,25 +81,6 @@ class GameViewModel @Inject constructor(
 
 
 
-    fun getUserFromApi(username: String) {
-
-        viewModelScope.launch {
-            gameRepository.getUserFromApi(username).collect { response ->
-                when (response) {
-                    is DataState.Loading -> Unit
-                    is DataState.Error<*> -> {
-                        registerState.incorrectUsername = true
-                    }
-                    is DataState.Success -> {
-                        response.data.let {
-                            registerState.incorrectUsername = false
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     fun syncData(username: String) {
 
         viewModelScope.launch {
@@ -143,8 +124,4 @@ data class GamesListScreenState(
     var isRefreshing: Boolean = false,
     var gamesList: List<Game> = mutableStateListOf<Game>()
 )
-
-sealed class GamesListScreenEvent {
-    object OnGameClick: GamesListScreenEvent()
-}
 

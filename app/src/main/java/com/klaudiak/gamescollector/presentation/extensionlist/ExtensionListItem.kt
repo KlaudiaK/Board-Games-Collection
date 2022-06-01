@@ -19,6 +19,7 @@ import com.klaudiak.gamescollector.domain.Extension
 @Composable
 fun ExtensionListItem(
     extension: Extension,
+    modifier: Modifier
 ) {
     Row(
         modifier = Modifier
@@ -39,6 +40,7 @@ fun ExtensionListItem(
             modifier = Modifier
                 .clip(CircleShape)
                 .weight(0.66f)
+                .aspectRatio(1f)
         )
         Spacer(modifier = Modifier.width(24.dp))
 

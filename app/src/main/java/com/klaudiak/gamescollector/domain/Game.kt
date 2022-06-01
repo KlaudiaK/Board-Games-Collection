@@ -18,10 +18,6 @@ data class Username(
  val user: String?
 )
 
-data class LastSyncDate(
- val lastSync: String?
-)
-
 data class GameInfo(
  val username: String?,
  val lastSync: String?

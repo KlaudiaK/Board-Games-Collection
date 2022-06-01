@@ -34,8 +34,6 @@ class UserViewModel @Inject constructor(
 
     var state by mutableStateOf(HomeScreenState())
 
-    //var game by mutableStateOf(Game("", "", "", "", ""))
-
     private val _showSyncDialog = MutableStateFlow(false)
     val showSyncDialog: StateFlow<Boolean> = _showSyncDialog.asStateFlow()
 
@@ -176,33 +174,5 @@ class UserViewModel @Inject constructor(
     }
 
 
-
-    fun saveUser(username: String) {
-        viewModelScope.launch {
-            gameRepository.saveUser(username).collect { response ->
-                when (response) {
-                    is DataState.Loading -> Unit
-                    is DataState.Error<*> -> Unit
-                    is DataState.Success -> {
-
-                        response.data.let {
-                            state = state.copy(username = it)
-
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
-
 }
 
-
-sealed class HomeScreenEvent{
-    object OnGoToGameListClickedEvent : HomeScreenEvent()
-    object OnGoToExtensionListClickedEvent: HomeScreenEvent()
-    object OnSynchronizeClickedEvent : HomeScreenEvent()
-    object OnClearDataClickedEvent : HomeScreenEvent()
-}
