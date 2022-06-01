@@ -1,72 +1,53 @@
 package com.klaudiak.gamescollector
 
 
-import android.content.Context
+import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import android.widget.TextView
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.compose.material.Scaffold
+import androidx.navigation.compose.rememberNavController
+import com.klaudiak.gamescollector.data.local.AppDatabase
 import com.klaudiak.gamescollector.data.remote.NetworkService
-import com.klaudiak.gamescollector.domain.Game
-import com.klaudiak.gamescollector.utils.DataState
-import com.klaudiak.gamescollector.viewmodel.MainViewModel
+import com.klaudiak.gamescollector.prefs.Preferences
+import com.klaudiak.gamescollector.presentation.NavigationComponent
+import com.klaudiak.gamescollector.ui.theme.GamesCollectorTheme
+import com.klaudiak.gamescollector.viewmodel.GameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val gameViewModel: GameViewModel by viewModels()
+
+
+    @Inject
+    lateinit var preferences: Preferences
 
     @Inject
     lateinit var networkService: NetworkService
 
-    private lateinit var text: TextView
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        subscribeObservers(viewModel)
-    }
+        val shouldShowOnboarding = preferences.loadShouldOpenHome()
+        AppDatabase.getDatabase(this)
 
-    private fun subscribeObservers(viewModel: MainViewModel){
-        viewModel.dataState.observe(this, Observer { dataState ->
-            when(dataState){
-                is DataState.Success<List<Game>> -> {
-                    displayProgressBar(false)
-                    appendBlogTitles(dataState.data)
-                }
-                is DataState.Error<*> -> {
-                    displayProgressBar(false)
-                    displayError(dataState.exception.message)
-                }
-                is DataState.Loading -> {
-                    displayProgressBar(true)
+        supportActionBar?.hide()
+        setContent {
+            val navController = rememberNavController()
+
+            GamesCollectorTheme {
+                Scaffold {
+                    NavigationComponent(
+                        preferences,
+                        navController)
                 }
             }
-        })
-    }
-
-    private fun displayError(message: String?){
-
-       // if(message != null) text.text = message else text.text = "Unknown error."
-    }
-
-    private fun appendBlogTitles(games: List<Game>){
-        val sb = StringBuilder()
-        for(game in games){
-            sb.append(game.id + "\n")
         }
-        text.text = sb.toString()
     }
-
-    private fun displayProgressBar(isDisplayed: Boolean){
-       // progress_bar.visibility = if(isDisplayed) View.VISIBLE else View.GONE
-    }
-
 }

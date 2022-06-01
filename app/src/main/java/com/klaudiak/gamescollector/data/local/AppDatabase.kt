@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.klaudiak.gamescollector.data.entities.GameEntity
 import com.klaudiak.gamescollector.data.entities.ExtensionEntity
+import com.klaudiak.gamescollector.data.entities.GameEntity
 import com.klaudiak.gamescollector.data.entities.Info
 
-@Database(entities = [GameEntity::class, ExtensionEntity::class, Info::class], version = 1, exportSchema = false)
+@Database(entities = [GameEntity::class, ExtensionEntity::class, Info::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun gameDao(): GameDao
@@ -21,7 +21,12 @@ abstract class AppDatabase : RoomDatabase() {
             instance ?: synchronized(this) { instance ?: buildDatabase(context).also { instance = it } }
 
         private fun buildDatabase(appContext: Context) =
-            Room.databaseBuilder(appContext, AppDatabase::class.java, "app_database")
+            Room.databaseBuilder(
+                appContext,
+                AppDatabase::class.java,
+                "bgc_db"
+            )
+                .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build()
     }
